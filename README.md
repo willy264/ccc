@@ -1,3 +1,5 @@
+> **Incognito demo branch:** this fork adds a local Normal/Incognito comparison inside CCC's existing app. See [the demo guide](INCOGNITO_DEMO.md) for setup, scope and screenshots. Chain-dependent privacy steps are simulated; this is not an official CCC release.
+
 <p align="center">
   <a href="https://app.ckbccc.com/">
     <img alt="Logo" src="https://raw.githubusercontent.com/ckb-devrel/ccc/dev/assets/logoAndText.svg" style="height: 8rem; max-width: 90%; padding: 0.5rem 0;" />

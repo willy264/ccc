@@ -1,0 +1,34 @@
+name: Incognito visual demo
+
+on:
+  pull_request:
+  push:
+    branches: [feat/incognito-mode-demo]
+
+permissions:
+  contents: read
+
+jobs:
+  incognito:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 26
+      - uses: pnpm/action-setup@v6
+        with:
+          cache: true
+      - name: Install pinned dependencies
+        run: pnpm --filter @ckb-ccc/app... install --frozen-lockfile
+      - name: Build the native CCC app and its workspace dependencies
+        run: pnpm --filter @ckb-ccc/app... build
+      - name: Check the private stealth package
+        run: pnpm --filter @ckb-ccc/stealth test
+      - name: Lint the native app
+        run: pnpm --filter @ckb-ccc/app lint
+      - name: Install headless Chromium
+        run: pnpm --filter @ckb-ccc/app exec playwright install --with-deps chromium
+      - name: Verify the wallet-free comparison and simulation boundary
+        run: pnpm --filter @ckb-ccc/app test:incognito
