@@ -14,12 +14,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint ./src",
-    "format": "prettier --write ./src && eslint --fix ./src"
+    "format": "prettier --write ./src && eslint --fix ./src",
+    "test:incognito": "node scripts/check-incognito.mjs",
+    "capture:incognito": "node scripts/check-incognito.mjs --capture"
   },
   "dependencies": {
     "@chainsafe/libp2p-noise": "^17.0.0",
     "@chainsafe/libp2p-yamux": "^8.0.1",
     "@ckb-ccc/connector-react": "workspace:*",
+    "@ckb-ccc/core": "workspace:*",
+    "@ckb-ccc/stealth": "workspace:*",
     "@ckb-ccc/libp2p": "workspace:*",
     "@ckb-ccc/lumos-patches": "workspace:*",
     "@ckb-ccc/ssri": "workspace:*",
@@ -46,6 +50,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
+    "playwright": "1.55.1",
     "@tailwindcss/postcss": "^4.1.12",
     "@types/node": "^26.0.1",
     "@types/react": "19.3.0",
