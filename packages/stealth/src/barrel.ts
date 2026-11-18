@@ -6,6 +6,7 @@ export { encodeStealthMetaAddress, decodeStealthMetaAddress } from "./meta-addre
 export { addStealthOutput, deriveStealthPayment } from "./derivation.js";
 export { deriveFreshChange } from "./change.js";
 export { deriveSpendKey } from "./spend.js";
+export { signStealthSpend, type StealthSpendOptions } from "./sign-spend.js";
 export { parseCapacity } from "./capacity.js";
 export { scanStealthCells, scanStealthPayments, type ScannedStealthCell } from "./scan.js";
 export { buildSendDraft, prepareSpendDraft, broadcastStealthTransaction } from "./transactions.js";
