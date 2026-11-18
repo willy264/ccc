@@ -23,3 +23,5 @@ The Vitest lifecycle test runs the same spend flow when `STEALTH_LIVE_LIFECYCLE=
 
 - Phase 5 funding delivered 10,000 testnet CKB to output `0`. The gated lifecycle test detected that exact cell with `scanStealthCells`. [Funding transaction](https://testnet.explorer.nervos.org/transaction/0xfea490a8895a15e6300b79775d11036f515ba2b77f316b0c72de512d5e6bbf38)
 - The test spent the funding cell to a fresh stealth lock for the same recipient. After the transaction committed, a second scan detected the change at output `0`. [Spend and change transaction](https://testnet.explorer.nervos.org/transaction/0x60f6cebbf82ee838da91deef68fce4f2fc1427a280376da40f07481b843c698f)
+
+On 2026-11-19, all 12 package tests passed at commit `6bf7eeb1` with both live tests enabled. The independent scan found the Phase 0 change. The lifecycle test spent the Phase 5 change to a fresh lock for the same recipient and detected the committed output at index `0`. [Verification spend](https://testnet.explorer.nervos.org/transaction/0x3a83d500ea797d5769bbeb8f0b7949ba8ea9911defc5cb4f3350e27520f74a2a)
