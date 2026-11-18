@@ -11,6 +11,14 @@ const VERSION = 0x01;
 const PREFIXES = { testnet: "ckts", mainnet: "ckbs" } as const;
 export type StealthIdentifierNetwork = keyof typeof PREFIXES;
 
+/** Recognize the reserved namespace even when the payload is malformed. */
+export function hasStealthIdentifierPrefix(value: string): boolean {
+  const address = value.toLowerCase();
+  return Object.values(PREFIXES).some((prefix) =>
+    address.startsWith(`${prefix}1`),
+  );
+}
+
 export function encodeExperimentalStealthIdentifier(
   metaAddress: StealthMetaAddress | string,
   network: StealthIdentifierNetwork,
@@ -34,9 +42,12 @@ export function decodeExperimentalStealthIdentifier(
   value: string,
   expectedNetwork?: StealthIdentifierNetwork,
 ): { network: StealthIdentifierNetwork; metaAddress: Hex } {
-  let decoded: { prefix: string; words: number[] };
+  let prefix: string;
+  let payload: Uint8Array;
   try {
-    decoded = bech32m.decode(value, 200);
+    const decoded = bech32m.decode(value, 200);
+    prefix = decoded.prefix;
+    payload = Uint8Array.from(bech32m.fromWords(decoded.words));
   } catch {
     fail(
       "INVALID_IDENTIFIER_CHECKSUM",
@@ -44,12 +55,12 @@ export function decodeExperimentalStealthIdentifier(
     );
   }
   const network = Object.entries(PREFIXES).find(
-    ([, prefix]) => prefix === decoded.prefix,
+    ([, candidate]) => candidate === prefix,
   )?.[0] as StealthIdentifierNetwork | undefined;
   if (!network) {
     fail(
       "INVALID_IDENTIFIER_NETWORK",
-      `Unsupported stealth identifier prefix: ${decoded.prefix}`,
+      `Unsupported stealth identifier prefix: ${prefix}`,
     );
   }
   if (expectedNetwork && expectedNetwork !== network) {
@@ -58,7 +69,6 @@ export function decodeExperimentalStealthIdentifier(
       `Stealth identifier network is ${network}, expected ${expectedNetwork}.`,
     );
   }
-  const payload = Uint8Array.from(bech32m.fromWords(decoded.words));
   if (payload[0] === 0x00) {
     fail(
       "UNSUPPORTED_IDENTIFIER_VERSION",

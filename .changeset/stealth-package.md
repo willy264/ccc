@@ -2,4 +2,4 @@
 "@ckb-ccc/stealth": minor
 ---
 
-Add the opt-in Obscell stealth-address foundation package with legacy meta-address derivation, deployment metadata, typed validation errors, and an experimental bech32m identifier codec.
+Add Obscell stealth payments for plain CKB on testnet, including one-time output derivation, live cell scanning, and signed spends with fresh change. The experimental entry point provides a bech32m identifier codec and a pay-only CCC address resolver.
