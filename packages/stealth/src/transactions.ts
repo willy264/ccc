@@ -99,10 +99,10 @@ export function prepareSpendDraft(
   };
 }
 
-/** Fail closed: this local prototype has no verified live signer/deployment adapter. */
+/** Rejects attempts to broadcast simulated fixture drafts. */
 export function broadcastStealthTransaction(): never {
   return fail(
     "LIVE_UNAVAILABLE",
-    "Live signing and broadcast are unavailable. Validate deployment, implement the lock-specific signer and testnet lifecycle first.",
+    "Fixture drafts cannot be broadcast. For a live testnet spend, use const { tx } = signStealthSpend(client, options), then await client.sendTransaction(tx).",
   );
 }
