@@ -20,7 +20,7 @@ export function publicKey(value: string, field: string): Uint8Array {
     fail("INVALID_KEY", `${field} must be a compressed secp256k1 point.`);
   }
   try {
-    Point.fromHex(hex(result)).assertValidity();
+    Point.fromBytes(result).assertValidity();
   } catch {
     fail("INVALID_KEY", `${field} is not a secp256k1 point.`);
   }
@@ -39,7 +39,7 @@ export function tweak(point: Uint8Array, secret: Uint8Array): bigint {
 }
 
 export function addTweak(spendPublicKey: Uint8Array, value: bigint): Uint8Array {
-  const result = Point.fromHex(hex(spendPublicKey)).add(Point.BASE.multiply(value));
+  const result = Point.fromBytes(spendPublicKey).add(Point.BASE.multiply(value));
   if (result.equals(Point.ZERO)) fail("INVALID_TWEAK", "The derived point is infinity.");
   return result.toBytes(true);
 }
