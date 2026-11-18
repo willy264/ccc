@@ -7,6 +7,6 @@ export { addStealthOutput, deriveStealthPayment } from "./derivation.js";
 export { deriveFreshChange } from "./change.js";
 export { deriveSpendKey } from "./spend.js";
 export { parseCapacity } from "./capacity.js";
-export { scanStealthPayments } from "./scan.js";
+export { scanStealthCells, scanStealthPayments, type ScannedStealthCell } from "./scan.js";
 export { buildSendDraft, prepareSpendDraft, broadcastStealthTransaction } from "./transactions.js";
 export type { Hex, StealthMetaAddress, StealthPayment, StealthIdentity, DemoIdentity, FixturePayment, DetectedPayment, SendDraft, SpendDraft } from "./types.js";
