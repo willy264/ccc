@@ -1,3 +1,4 @@
+import type { ccc } from "@ckb-ccc/core";
 import { assertCapacity } from "./capacity.js";
 import { fail, StealthError } from "./errors.js";
 import { addTweak, publicKey, scalar, tweak } from "./internal/curve.js";
@@ -17,7 +18,9 @@ function matchLock(lock: ccc.Script, view: Uint8Array, spend: Uint8Array) {
   const ephemeralPublicKey = hex(args.slice(0, 33));
   const ephemeral = publicKey(ephemeralPublicKey, "Ephemeral public key");
   const derived = addTweak(spend, tweak(ephemeral, view));
-  if (pubkeyHash(derived) !== hex(args.slice(33)).slice(2)) return undefined;
+  if (pubkeyHash(derived) !== hex(args.slice(33)).slice(2)) {
+    return undefined;
+  }
   return { ephemeralPublicKey, oneTimePublicKey: hex(derived) };
 }
 
@@ -39,17 +42,29 @@ export async function scanStealthCells(
       withData: true,
     })) {
       const id = `${cell.outPoint.txHash}:${cell.outPoint.index}`;
-      if (seen.has(id)) continue;
+      if (seen.has(id)) {
+        continue;
+      }
       seen.add(id);
       const { lock, type, capacity } = cell.cellOutput;
-      if (type || cell.outputData !== "0x" ||
-          lock.codeHash !== stealthLock.codeHash || lock.hashType !== stealthLock.hashType) continue;
+      if (
+        type ||
+        cell.outputData !== "0x" ||
+        lock.codeHash !== stealthLock.codeHash ||
+        lock.hashType !== stealthLock.hashType
+      ) {
+        continue;
+      }
       try {
         assertCapacity(capacity, lock);
         const match = matchLock(lock, view, spend);
-        if (match) matches.push({ cell, ...match });
+        if (match) {
+          matches.push({ cell, ...match });
+        }
       } catch (error) {
-        if (!(error instanceof StealthError)) throw error;
+        if (!(error instanceof StealthError)) {
+          throw error;
+        }
       }
     }
     return matches;
@@ -60,7 +75,9 @@ export async function scanStealthCells(
 
 /** View-only matching over supplied fixtures; does not fetch an indexer or claim chain state. */
 export function scanStealthPayments(
-  records: readonly FixturePayment[], viewKey: string, spendPublicKey: string,
+  records: readonly FixturePayment[],
+  viewKey: string,
+  spendPublicKey: string,
 ): { matches: DetectedPayment[]; rejected: number } {
   const view = scalar(viewKey, "View key");
   const spend = publicKey(spendPublicKey, "Spend public key");
@@ -69,14 +86,25 @@ export function scanStealthPayments(
   let rejected = 0;
   for (const record of records) {
     try {
-      if (record.source !== "SIMULATED" || record.outputData !== "0x" || seen.has(record.id)) {
+      if (
+        record.source !== "SIMULATED" ||
+        record.outputData !== "0x" ||
+        seen.has(record.id)
+      ) {
         fail("INVALID_FIXTURE", "Expected a unique empty-data local fixture.");
       }
       seen.add(record.id);
       const lock = assertLock(record.lock);
       assertCapacity(record.capacity, lock);
       const match = matchLock(lock, view, spend);
-      if (match) matches.push({ ...record, lock: lock.clone(), oneTimePublicKey: match.oneTimePublicKey, address: addressFor(lock) });
+      if (match) {
+        matches.push({
+          ...record,
+          lock: lock.clone(),
+          oneTimePublicKey: match.oneTimePublicKey,
+          address: addressFor(lock),
+        });
+      }
     } catch {
       rejected++;
     }
@@ -84,4 +112,3 @@ export function scanStealthPayments(
   view.fill(0);
   return { matches, rejected };
 }
-import type { ccc } from "@ckb-ccc/core";

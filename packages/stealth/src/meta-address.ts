@@ -9,7 +9,9 @@ export function encodeStealthMetaAddress(value: StealthMetaAddress): Hex {
 
 export function decodeStealthMetaAddress(value: string): StealthMetaAddress {
   const raw = bytes(value, 66, "Stealth meta-address");
-  const viewPublicKey = hex(publicKey(hex(raw.slice(0, 33)), "View public key"));
+  const viewPublicKey = hex(
+    publicKey(hex(raw.slice(0, 33)), "View public key"),
+  );
   const spendPublicKey = hex(publicKey(hex(raw.slice(33)), "Spend public key"));
   return { viewPublicKey, spendPublicKey };
 }

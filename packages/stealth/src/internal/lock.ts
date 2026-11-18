@@ -1,6 +1,6 @@
 import { ccc } from "@ckb-ccc/core";
-import { TESTNET_STEALTH } from "../predefined/index.js";
 import { fail } from "../errors.js";
+import { TESTNET_STEALTH } from "../predefined/index.js";
 import { publicKey } from "./curve.js";
 import { bytes } from "./encoding.js";
 
@@ -10,8 +10,14 @@ export function pubkeyHash(pub: Uint8Array): string {
 
 export function assertLock(lockLike: ccc.ScriptLike): ccc.Script {
   const lock = ccc.Script.from(lockLike);
-  if (lock.codeHash !== TESTNET_STEALTH.stealthLock.codeHash || lock.hashType !== TESTNET_STEALTH.stealthLock.hashType) {
-    fail("WRONG_LOCK", "The output does not use the configured testnet stealth lock.");
+  if (
+    lock.codeHash !== TESTNET_STEALTH.stealthLock.codeHash ||
+    lock.hashType !== TESTNET_STEALTH.stealthLock.hashType
+  ) {
+    fail(
+      "WRONG_LOCK",
+      "The output does not use the configured testnet stealth lock.",
+    );
   }
   bytes(lock.args, 53, "Stealth lock arguments");
   publicKey(lock.args.slice(0, 68), "Ephemeral public key");

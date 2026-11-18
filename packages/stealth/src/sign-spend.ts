@@ -1,4 +1,5 @@
 import { ccc } from "@ckb-ccc/core";
+import { secp256k1 } from "@noble/curves/secp256k1.js";
 import { assertCapacity } from "./capacity.js";
 import { addStealthOutput, deriveStealthPayment } from "./derivation.js";
 import { fail } from "./errors.js";
@@ -6,7 +7,6 @@ import { assertLock, pubkeyHash } from "./internal/lock.js";
 import { encodeStealthMetaAddress } from "./meta-address.js";
 import { stealthScriptInfoForPrefix } from "./predefined/index.js";
 import { deriveSpendKey } from "./spend.js";
-import { secp256k1 } from "@noble/curves/secp256k1.js";
 
 export interface StealthSpendOptions {
   inputs: readonly ccc.Cell[];
@@ -23,17 +23,23 @@ export function signStealthSpend(
   { inputs, viewKey, spendKey, feeRate, payment }: StealthSpendOptions,
 ) {
   const { cellDeps } = stealthScriptInfoForPrefix(client.addressPrefix);
-  if (inputs.length === 0) fail("MISSING_INPUTS", "Select at least one stealth cell.");
+  if (inputs.length === 0) {
+    fail("MISSING_INPUTS", "Select at least one stealth cell.");
+  }
   if (typeof feeRate !== "bigint" || feeRate <= 0n) {
     fail("INVALID_FEE_RATE", "Use a positive fee rate in shannons per kB.");
   }
 
-  const tx = ccc.Transaction.from({ cellDeps: cellDeps.map(({ cellDep }) => cellDep) });
+  const tx = ccc.Transaction.from({
+    cellDeps: cellDeps.map(({ cellDep }) => cellDep),
+  });
   const seen = new Set<string>();
   let total = 0n;
   for (const cell of inputs) {
     const id = `${cell.outPoint.txHash}:${cell.outPoint.index}`;
-    if (seen.has(id)) fail("DUPLICATE_INPUT", "Each selected outpoint must be unique.");
+    if (seen.has(id)) {
+      fail("DUPLICATE_INPUT", "Each selected outpoint must be unique.");
+    }
     seen.add(id);
     const { lock, type, capacity } = cell.cellOutput;
     if (type || cell.outputData !== "0x") {
@@ -45,12 +51,16 @@ export function signStealthSpend(
     tx.setWitnessArgs(tx.inputs.length - 1, { lock: `0x${"00".repeat(65)}` });
   }
 
-  if (payment) addStealthOutput(tx, client, payment.identifier, payment.capacity);
+  if (payment) {
+    addStealthOutput(tx, client, payment.identifier, payment.capacity);
+  }
   const remaining = total - (payment?.capacity ?? 0n);
   const feeWithoutChange = tx.estimateFee(feeRate);
   const recipient = encodeStealthMetaAddress({
     viewPublicKey: ccc.hexFrom(secp256k1.getPublicKey(ccc.bytesFrom(viewKey))),
-    spendPublicKey: ccc.hexFrom(secp256k1.getPublicKey(ccc.bytesFrom(spendKey))),
+    spendPublicKey: ccc.hexFrom(
+      secp256k1.getPublicKey(ccc.bytesFrom(spendKey)),
+    ),
   });
   const { lock: changeLock } = deriveStealthPayment(client, recipient);
   const withChange = tx.clone();
@@ -58,7 +68,10 @@ export function signStealthSpend(
   const change = remaining - withChange.estimateFee(feeRate);
   const minimumChange = BigInt(8 + changeLock.occupiedSize) * 100_000_000n;
   if (remaining < feeWithoutChange || (!payment && change < minimumChange)) {
-    fail("INSUFFICIENT_CAPACITY", "Inputs cannot cover the outputs and estimated fee.");
+    fail(
+      "INSUFFICIENT_CAPACITY",
+      "Inputs cannot cover the outputs and estimated fee.",
+    );
   }
 
   let changeCapacity = 0n;
@@ -78,7 +91,10 @@ export function signStealthSpend(
       const signature = ccc.signMessageSecp256k1(hash, key);
       const recovered = ccc.recoverMessageSecp256k1(hash, signature);
       if (pubkeyHash(ccc.bytesFrom(recovered)) !== lock.args.slice(-40)) {
-        fail("INVALID_SIGNATURE", "The recovered public key does not match the stealth lock.");
+        fail(
+          "INVALID_SIGNATURE",
+          "The recovered public key does not match the stealth lock.",
+        );
       }
       tx.setWitnessArgs(index, { lock: signature });
     } finally {

@@ -11,5 +11,5 @@ export interface StealthScriptInfo {
     readonly codeHash: Hex;
     readonly hashType: "type";
   };
- readonly cellDeps: readonly ccc.CellDepInfoLike[];
+  readonly cellDeps: readonly ccc.CellDepInfoLike[];
 }
