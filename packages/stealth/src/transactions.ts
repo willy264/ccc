@@ -2,7 +2,6 @@ import { ccc } from "@ckb-ccc/core";
 import { secp256k1 } from "@noble/curves/secp256k1.js";
 import { assertCapacity, parseCapacity } from "./capacity.js";
 import { deriveFreshChange } from "./change.js";
-import { deriveStealthPayment } from "./derivation.js";
 import { fail } from "./errors.js";
 import { scalar } from "./internal/curve.js";
 import { hex } from "./internal/encoding.js";
@@ -53,7 +52,7 @@ export function prepareSpendDraft(
   return {
     source: "SIMULATED",
     oneTimePublicKey,
-    destination: deriveStealthPayment(destinationMetaAddress),
+    destination: deriveFreshChange(destinationMetaAddress),
     change: deriveFreshChange(identity.metaAddress),
     steps: [
       "LOCAL: verify view/spend keys authorize the detected one-time lock",

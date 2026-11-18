@@ -3,7 +3,7 @@ export * as predefined from "./predefined/index.js";
 export { PRIVACY_DISCLOSURE } from "./disclosure.js";
 export { StealthError } from "./errors.js";
 export { encodeStealthMetaAddress, decodeStealthMetaAddress } from "./meta-address.js";
-export { deriveStealthPayment } from "./derivation.js";
+export { addStealthOutput, deriveStealthPayment } from "./derivation.js";
 export { deriveFreshChange } from "./change.js";
 export { deriveSpendKey } from "./spend.js";
 export { parseCapacity } from "./capacity.js";

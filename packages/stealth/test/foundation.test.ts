@@ -14,7 +14,7 @@ describe("foundation", () => {
     const encoded = encodeStealthMetaAddress(metaAddress);
     expect(encoded).toBe(`0x${metaAddress.viewPublicKey.slice(2)}${metaAddress.spendPublicKey.slice(2)}`);
     expect(decodeStealthMetaAddress(encoded)).toEqual(metaAddress);
-    expect(() => decodeStealthMetaAddress(`0x${"02".repeat(66)}`)).toThrow(StealthError);
+    expect(() => decodeStealthMetaAddress(`02${"ff".repeat(32)}${metaAddress.spendPublicKey.slice(2)}`)).toThrow(StealthError);
   });
 
   it("round-trips the experimental bech32m identifier", () => {
