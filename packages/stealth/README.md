@@ -93,7 +93,9 @@ async function sweepPayment(
 }
 ```
 
-Pass a cell returned by `findPayment` to `sweepPayment`. This sends its capacity minus the fee to a fresh lock owned by the same recipient. To pay a second recipient, pass `payment: { identifier, capacity }` to `signStealthSpend`, with capacity in shannons. Change below 94 CKB goes into the fee and is reported in `extraFee`. The helper accepts only plain stealth inputs and signs the raw transaction hash locally.
+Pass a cell returned by `findPayment` to `sweepPayment`. This sends its capacity minus the fee to a fresh lock owned by the same recipient. To pay a second recipient, pass `payment: { identifier, capacity }` to `signStealthSpend`, with capacity in shannons. The helper signs the raw transaction hash locally and funds both the payment and the fee exclusively from plain stealth cells. Mixing normal-wallet inputs into the same transaction would publicly link them to the stealth inputs.
+
+If the remaining capacity cannot fund a 94 CKB change cell after fees, `extraFee` is the amount above the normal fee that would go to the miner. By default, `maxExtraFee` equals the estimated fee for the transaction without change, so the allowance scales with its size and fee rate. A larger excess throws `StealthError` with code `EXCESSIVE_FEE` before signing. Adjust the payment to leave spendable change, or pass an explicit `maxExtraFee` in shannons to authorize the excess. Set it to `0n` to allow only the estimated fee.
 
 ## Optional pay-only address resolver
 

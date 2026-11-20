@@ -13,6 +13,8 @@ export interface StealthSpendOptions {
   viewKey: string;
   spendKey: string;
   feeRate: bigint;
+  /** Maximum additional fee in shannons when change is below capacity. Defaults to the estimated fee without change. */
+  maxExtraFee?: bigint;
   /** Optional fixed payment. Omit to sweep the inputs to fresh self change. */
   payment?: { identifier: string; capacity: bigint };
 }
@@ -20,7 +22,7 @@ export interface StealthSpendOptions {
 /** Build and verify a signed Obscell transaction locally. Fee rate is shannons per kB. */
 export function signStealthSpend(
   client: Pick<ccc.Client, "addressPrefix">,
-  { inputs, viewKey, spendKey, feeRate, payment }: StealthSpendOptions,
+  { inputs, viewKey, spendKey, feeRate, payment, maxExtraFee }: StealthSpendOptions,
 ) {
   const { cellDeps } = stealthScriptInfoForPrefix(client.addressPrefix);
   if (inputs.length === 0) {
@@ -28,6 +30,9 @@ export function signStealthSpend(
   }
   if (typeof feeRate !== "bigint" || feeRate <= 0n) {
     fail("INVALID_FEE_RATE", "Use a positive fee rate in shannons per kB.");
+  }
+  if (maxExtraFee !== undefined && (typeof maxExtraFee !== "bigint" || maxExtraFee < 0n)) {
+    fail("INVALID_FEE_LIMIT", "maxExtraFee must be a nonnegative bigint in shannons.");
   }
 
   const tx = ccc.Transaction.from({
@@ -82,6 +87,13 @@ export function signStealthSpend(
     changeCapacity = change;
   } else {
     extraFee = remaining - feeWithoutChange;
+    const limit = maxExtraFee ?? feeWithoutChange;
+    if (extraFee > limit) {
+      fail(
+        "EXCESSIVE_FEE",
+        `Subminimum change would add ${extraFee} shannons to the estimated fee (${remaining} shannons total). Adjust the payment or explicitly raise maxExtraFee to at least ${extraFee} shannons.`,
+      );
+    }
   }
 
   const hash = tx.hash();

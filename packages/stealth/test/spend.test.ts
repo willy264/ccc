@@ -28,6 +28,7 @@ it("signs each input over the raw hash and accounts for subminimum change", () =
   const dust = signStealthSpend(client, {
     ...options,
     payment: { identifier, capacity: 35_000_000_000n },
+    maxExtraFee: 5_000_000_000n,
   });
   expect(dust.tx.outputs).toHaveLength(1);
   expect(dust.changeCapacity).toBe(0n);
