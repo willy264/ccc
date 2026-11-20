@@ -11,7 +11,7 @@ pnpm install --frozen-lockfile
 pnpm --filter "@ckb-ccc/stealth..." run build
 ```
 
-In a consuming package in the same workspace, add both dependencies with `pnpm add "@ckb-ccc/core@workspace:*" "@ckb-ccc/stealth@workspace:*"`. The package requires CCC core 1.23.0 or later.
+In a consuming package in the same workspace, add both dependencies with `pnpm add "@ckb-ccc/core@workspace:*" "@ckb-ccc/stealth@workspace:*"`. The package requires `@ckb-ccc/core` 1.23.0 or later for its `AddressResolver` interface.
 
 ## Select the network
 
