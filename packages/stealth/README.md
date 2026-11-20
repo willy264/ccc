@@ -33,7 +33,7 @@ try {
 
 ## Receive and send a payment
 
-The recipient creates two independent secp256k1 key pairs and keeps both secrets locally. Pass their compressed 33-byte public keys, encoded as hex, to `encodeStealthMetaAddress({ viewPublicKey, spendPublicKey })` from `@ckb-ccc/stealth`. Share the returned identifier with the sender. This raw format carries the view public key first and the spend public key second. Select testnet explicitly because the raw format carries no network marker. [Identifier formats](docs/identifier-spec.md)
+The recipient creates two independent secp256k1 key pairs and keeps both secrets locally. Pass their compressed 33-byte public keys, encoded as hex, to `encodeStealthMetaAddress({ viewPublicKey, spendPublicKey })` from `@ckb-ccc/stealth`. Share the returned identifier with the sender. The stable payment API takes the raw Obscell identifier, 132 hex digits with an optional `0x` prefix, containing the view public key followed by the spend public key. Select testnet explicitly because the raw format carries no network marker. Only the experimental resolver accepts the proposed bech32m form as a payment destination. [Identifier formats](docs/identifier-spec.md)
 
 The sender supplies a funded, connected CCC testnet signer. Each plain stealth cell needs at least 94 CKB.
 
