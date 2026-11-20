@@ -22,21 +22,34 @@ export interface StealthSpendOptions {
 /** Build and verify a signed Obscell transaction locally. Fee rate is shannons per kB. */
 export function signStealthSpend(
   client: Pick<ccc.Client, "addressPrefix">,
-  { inputs, viewKey, spendKey, feeRate, payment, maxExtraFee }: StealthSpendOptions,
+  {
+    inputs,
+    viewKey,
+    spendKey,
+    feeRate,
+    payment,
+    maxExtraFee,
+  }: StealthSpendOptions,
 ) {
-  const { cellDeps } = stealthScriptInfoForPrefix(client.addressPrefix);
+  const deployment = stealthScriptInfoForPrefix(client.addressPrefix);
   if (inputs.length === 0) {
     fail("MISSING_INPUTS", "Select at least one stealth cell.");
   }
   if (typeof feeRate !== "bigint" || feeRate <= 0n) {
     fail("INVALID_FEE_RATE", "Use a positive fee rate in shannons per kB.");
   }
-  if (maxExtraFee !== undefined && (typeof maxExtraFee !== "bigint" || maxExtraFee < 0n)) {
-    fail("INVALID_FEE_LIMIT", "maxExtraFee must be a nonnegative bigint in shannons.");
+  if (
+    maxExtraFee !== undefined &&
+    (typeof maxExtraFee !== "bigint" || maxExtraFee < 0n)
+  ) {
+    fail(
+      "INVALID_FEE_LIMIT",
+      "maxExtraFee must be a nonnegative bigint in shannons.",
+    );
   }
 
   const tx = ccc.Transaction.from({
-    cellDeps: cellDeps.map(({ cellDep }) => cellDep),
+    cellDeps: deployment.cellDeps.map(({ cellDep }) => cellDep),
   });
   const seen = new Set<string>();
   let total = 0n;
@@ -50,7 +63,7 @@ export function signStealthSpend(
     if (type || cell.outputData !== "0x") {
       fail("UNSUPPORTED_INPUT", "Stealth spends require plain CKB cells.");
     }
-    assertCapacity(capacity, assertLock(lock));
+    assertCapacity(capacity, assertLock(lock, deployment));
     total += capacity;
     tx.addInput(cell);
     tx.setWitnessArgs(tx.inputs.length - 1, { lock: `0x${"00".repeat(65)}` });
@@ -98,7 +111,9 @@ export function signStealthSpend(
 
   const hash = tx.hash();
   inputs.forEach(({ cellOutput: { lock } }, index) => {
-    const key = ccc.bytesFrom(deriveSpendKey(lock, viewKey, spendKey));
+    const key = ccc.bytesFrom(
+      deriveSpendKey(lock, viewKey, spendKey, deployment),
+    );
     try {
       const signature = ccc.signMessageSecp256k1(hash, key);
       const recovered = ccc.recoverMessageSecp256k1(hash, signature);

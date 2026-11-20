@@ -6,6 +6,7 @@ import { derivePayment } from "../internal/derive-payment.js";
 import { hex } from "../internal/encoding.js";
 import { assertLock } from "../internal/lock.js";
 import { encodeStealthMetaAddress } from "../meta-address.js";
+import { stealthScriptInfoForPrefix } from "../predefined/index.js";
 import type {
   DemoIdentity,
   FixturePayment,
@@ -36,10 +37,12 @@ export function createDemoIdentity(): DemoIdentity {
 export function deriveStealthPaymentForTest(
   metaAddress: string,
   ephemeralPrivateKey: string,
+  deployment = stealthScriptInfoForPrefix(),
 ): StealthPayment {
   return derivePayment(
     metaAddress,
     scalar(ephemeralPrivateKey, "Ephemeral private key"),
+    deployment,
   );
 }
 
@@ -47,8 +50,9 @@ export function createFixturePayment(
   payment: StealthPayment,
   capacityCkb: string,
   id = "local-payment-1",
+  deployment = stealthScriptInfoForPrefix(),
 ): FixturePayment {
-  const lock = assertLock(payment.lock);
+  const lock = assertLock(payment.lock, deployment);
   const capacity = parseCapacity(capacityCkb);
   assertCapacity(capacity, lock);
   if (!/^[a-z][a-z0-9-]{0,63}$/.test(id)) {

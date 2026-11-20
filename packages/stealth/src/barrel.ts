@@ -1,6 +1,5 @@
 export { parseCapacity } from "./capacity.js";
 export { deriveFreshChange } from "./change.js";
-export { TESTNET_STEALTH_LOCK } from "./constants.js";
 export { addStealthOutput, deriveStealthPayment } from "./derivation.js";
 export { PRIVACY_DISCLOSURE } from "./disclosure.js";
 export { StealthError } from "./errors.js";
@@ -8,7 +7,7 @@ export {
   decodeStealthMetaAddress,
   encodeStealthMetaAddress,
 } from "./meta-address.js";
-export * as predefined from "./predefined/index.js";
+export { TESTNET_STEALTH_LOCK } from "./predefined/index.js";
 export {
   scanStealthCells,
   scanStealthPayments,

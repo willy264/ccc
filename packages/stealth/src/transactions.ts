@@ -10,6 +10,7 @@ import {
   decodeStealthMetaAddress,
   encodeStealthMetaAddress,
 } from "./meta-address.js";
+import { stealthScriptInfoForPrefix } from "./predefined/index.js";
 import { deriveSpendKey } from "./spend.js";
 import type {
   DetectedPayment,
@@ -23,8 +24,9 @@ import type {
 export function buildSendDraft(
   payment: StealthPayment,
   capacityCkb: string,
+  deployment = stealthScriptInfoForPrefix(),
 ): SendDraft {
-  const lock = assertLock(payment.lock);
+  const lock = assertLock(payment.lock, deployment);
   const capacity = parseCapacity(capacityCkb);
   assertCapacity(capacity, lock);
   return {
@@ -34,7 +36,7 @@ export function buildSendDraft(
       outputsData: ["0x"],
     }),
     amountCkb: capacityCkb,
-    outputAddress: addressFor(lock),
+    outputAddress: addressFor(lock, deployment.addressPrefix),
     steps: [
       "LOCAL: derive the one-time recipient lock with ECDH",
       "LOCAL: build the unsigned output using ccc.Transaction.from",
@@ -53,6 +55,7 @@ export function prepareSpendDraft(
   payment: DetectedPayment,
   identity: StealthIdentity,
   destinationMetaAddress: string,
+  deployment = stealthScriptInfoForPrefix(),
 ): SpendDraft {
   if (payment.source !== "SIMULATED") {
     fail(
@@ -77,9 +80,14 @@ export function prepareSpendDraft(
       "The change meta-address must belong to the supplied view/spend keys.",
     );
   }
-  assertCapacity(payment.capacity, assertLock(payment.lock));
+  assertCapacity(payment.capacity, assertLock(payment.lock, deployment));
   const secret = scalar(
-    deriveSpendKey(payment.lock, identity.viewKey, identity.spendKey),
+    deriveSpendKey(
+      payment.lock,
+      identity.viewKey,
+      identity.spendKey,
+      deployment,
+    ),
     "One-time spend key",
   );
   const oneTimePublicKey = hex(secp256k1.getPublicKey(secret, true));
@@ -87,8 +95,8 @@ export function prepareSpendDraft(
   return {
     source: "SIMULATED",
     oneTimePublicKey,
-    destination: deriveFreshChange(destinationMetaAddress),
-    change: deriveFreshChange(identity.metaAddress),
+    destination: deriveFreshChange(destinationMetaAddress, deployment),
+    change: deriveFreshChange(identity.metaAddress, deployment),
     steps: [
       "LOCAL: verify view/spend keys authorize the detected one-time lock",
       "LOCAL: derive a new recipient output and a separate fresh change address",

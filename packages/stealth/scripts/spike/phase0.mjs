@@ -14,38 +14,17 @@ import {
   fixedPointFrom,
   fixedPointToString,
   hashCkb,
+  hashCkbShort,
   recoverMessageSecp256k1,
   Script,
   signMessageSecp256k1,
   verifyMessageSecp256k1,
 } from "@ckb-ccc/core";
 import { secp256k1 } from "@noble/curves/secp256k1.js";
-import { blake160 } from "@nervosnetwork/ckb-sdk-utils";
+import { predefined } from "@ckb-ccc/stealth";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../../../");
 const envPath = path.join(root, ".env");
-const config = {
-  stealthCodeHash:
-    "0x0dc965b5bfb6db2759275ad7d92ee502e10955cca789d001af03e3576cfe3f1c",
-  ckbAuthCodeHash:
-    "0x0915983bb31584df4566e0946fd00ef1e9a75ad37a39ce70fec9b5cbf3b87021",
-  stealthDep: {
-    outPoint: {
-      txHash:
-        "0x305a174d8af95368aac1768bf7b1fe7398a6cb6b04808fbbc685300403318428",
-      index: 0,
-    },
-    depType: "code",
-  },
-  authDep: {
-    outPoint: {
-      txHash:
-        "0xa0e99b29fd154385815142b76668d5f4ecf30ae85bc2942bd21e9e51b9066f97",
-      index: 0,
-    },
-    depType: "code",
-  },
-};
 const SECP256K1_ORDER =
   0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141n;
 
@@ -107,7 +86,7 @@ function derivePayment(viewPublicKey, spendPublicKey, ephemeralSecretKey) {
   return {
     ephemeralPublicKey,
     oneTimePublicKey,
-    lockArgs: bytesConcat(ephemeralPublicKey, bytes(blake160(oneTimePublicKey))),
+    lockArgs: bytesConcat(ephemeralPublicKey, bytes(hashCkbShort(oneTimePublicKey))),
   };
 }
 
@@ -115,22 +94,22 @@ function scalarHex(value) {
   return `0x${value.toString(16).padStart(64, "0")}`;
 }
 
-async function probe(client) {
+async function probe(client, deployment) {
   const [stealthCell, authCell] = await Promise.all([
-    client.getCellLive(config.stealthDep.outPoint, true, false),
-    client.getCellLive(config.authDep.outPoint, true, false),
+    client.getCellLive(deployment.cellDeps[0].cellDep.outPoint, true, false),
+    client.getCellLive(deployment.cellDeps[1].cellDep.outPoint, true, false),
   ]);
   if (!stealthCell) throw new Error("stealth-lock cell dep is not live");
   if (!authCell) throw new Error("ckb-auth cell dep is not live");
 
   const stealthType = stealthCell.cellOutput.type;
   const stealthTypeHash = stealthType ? Script.from(stealthType).hash() : undefined;
-  const stealthTypeMatches = stealthTypeHash === config.stealthCodeHash;
+  const stealthTypeMatches = stealthTypeHash === deployment.stealthLock.codeHash;
   const authType = authCell.cellOutput.type;
   const authDataHash = hashCkb(authCell.outputData);
   console.log(JSON.stringify({
     phase: "0.1",
-    network: "testnet",
+    network: deployment.network,
     stealthDep: {
       live: true,
       outputDataHash: hashCkb(stealthCell.outputData),
@@ -149,7 +128,7 @@ async function probe(client) {
 
   const result = [];
   const key = {
-    script: { codeHash: config.stealthCodeHash, hashType: "type", args: "0x" },
+    script: { ...deployment.stealthLock, args: "0x" },
     scriptType: "lock",
     scriptSearchMode: "prefix",
     withData: false,
@@ -164,7 +143,8 @@ async function main() {
   const owner = ClientPublicTestnet.open({ urls: ["https://testnet.ckb.dev/"] });
   const client = owner.value;
   try {
-    await probe(client);
+    const deployment = predefined.stealthScriptInfoForPrefix(client.addressPrefix);
+    await probe(client, deployment);
     const env = loadEnv();
     let viewSecret = env.STEALTH_VIEW_SECRET;
     let spendSecret = env.STEALTH_SPEND_SECRET;
@@ -186,8 +166,7 @@ async function main() {
     }
     const payment = derivePayment(viewPublicKey, spendPublicKey, ephemeralSecret);
     const lock = Script.from({
-      codeHash: config.stealthCodeHash,
-      hashType: "type",
+      ...deployment.stealthLock,
       args: hex(payment.lockArgs),
     });
     const stealthAddress = Address.fromScript(lock, client).toString();
@@ -217,11 +196,11 @@ async function main() {
 
     const nextEphemeralSecret = randomSecretKey();
     const nextPayment = derivePayment(viewPublicKey, spendPublicKey, nextEphemeralSecret);
-    const nextLock = Script.from({ codeHash: config.stealthCodeHash, hashType: "type", args: hex(nextPayment.lockArgs) });
+    const nextLock = Script.from({ ...deployment.stealthLock, args: hex(nextPayment.lockArgs) });
     const fee = fixedPointFrom("0.001");
     const outputCapacity = inputCell.cellOutput.capacity - fee;
     const tx = Transaction.from({
-      cellDeps: [config.stealthDep, config.authDep],
+      cellDeps: deployment.cellDeps.map(({ cellDep }) => cellDep),
       inputs: [{ previousOutput: inputCell.outPoint }],
       outputs: [{ capacity: outputCapacity, lock: nextLock }],
       witnesses: [WitnessArgs.from({ lock: `0x${"00".repeat(65)}` }).toBytes()],
@@ -233,7 +212,7 @@ async function main() {
     const signature = signMessageSecp256k1(tx.hash(), scalarHex(spendSecretScalar));
     const recovered = recoverMessageSecp256k1(tx.hash(), signature);
     const expectedOneTimePublicKey = secp256k1.Point.BASE.multiply(spendSecretScalar).toBytes(true);
-    const expectedLockHash = hex(blake160(expectedOneTimePublicKey));
+    const expectedLockHash = hashCkbShort(expectedOneTimePublicKey);
     const actualLockHash = `0x${lock.args.slice(68)}`;
     const verified = verifyMessageSecp256k1(tx.hash(), signature, hex(expectedOneTimePublicKey)) &&
       expectedLockHash === actualLockHash;
@@ -257,7 +236,7 @@ async function main() {
     const confirmed = await client.waitTransaction(txHash, 1, 120000, 3000);
     let changeFoundByPrefixScan = false;
     for await (const cell of client.findCells({
-      script: { codeHash: config.stealthCodeHash, hashType: "type", args: "0x" },
+      script: { ...deployment.stealthLock, args: "0x" },
       scriptType: "lock",
       scriptSearchMode: "prefix",
       withData: false,

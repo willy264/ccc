@@ -1,6 +1,6 @@
 import { ccc } from "@ckb-ccc/core";
 import { fail } from "../errors.js";
-import { TESTNET_STEALTH } from "../predefined/index.js";
+import type { StealthScriptInfo } from "../predefined/index.js";
 import { publicKey } from "./curve.js";
 import { bytes } from "./encoding.js";
 
@@ -8,15 +8,18 @@ export function pubkeyHash(pub: Uint8Array): string {
   return ccc.hashCkb(pub).slice(2, 42);
 }
 
-export function assertLock(lockLike: ccc.ScriptLike): ccc.Script {
+export function assertLock(
+  lockLike: ccc.ScriptLike,
+  deployment: StealthScriptInfo,
+): ccc.Script {
   const lock = ccc.Script.from(lockLike);
   if (
-    lock.codeHash !== TESTNET_STEALTH.stealthLock.codeHash ||
-    lock.hashType !== TESTNET_STEALTH.stealthLock.hashType
+    lock.codeHash !== deployment.stealthLock.codeHash ||
+    lock.hashType !== deployment.stealthLock.hashType
   ) {
     fail(
       "WRONG_LOCK",
-      "The output does not use the configured testnet stealth lock.",
+      `The output does not use the configured ${deployment.network} stealth lock.`,
     );
   }
   bytes(lock.args, 53, "Stealth lock arguments");
@@ -24,6 +27,6 @@ export function assertLock(lockLike: ccc.ScriptLike): ccc.Script {
   return lock;
 }
 
-export function addressFor(lock: ccc.Script): string {
-  return ccc.Address.from({ script: lock, prefix: "ckt" }).toString();
+export function addressFor(lock: ccc.Script, prefix: string): string {
+  return ccc.Address.from({ script: lock, prefix }).toString();
 }

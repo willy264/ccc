@@ -5,7 +5,7 @@ import {
   createStealthAddressResolver,
   encodeExperimentalStealthIdentifier,
 } from "../src/experimental.js";
-import { deriveSpendKey, TESTNET_STEALTH_LOCK } from "../src/index.js";
+import { deriveSpendKey, stealthScriptInfoForPrefix } from "../src/index.js";
 import vector from "./vector.json";
 
 const transport = {
@@ -27,7 +27,9 @@ it("resolves a fresh recipient-owned payment lock on each CCC lookup", async () 
     second.script.args.slice(0, 68),
   );
   for (const { script } of [first, second]) {
-    expect(script.codeHash).toBe(TESTNET_STEALTH_LOCK.codeHash);
+    expect(script.codeHash).toBe(
+      stealthScriptInfoForPrefix(client.addressPrefix).stealthLock.codeHash,
+    );
     expect(() =>
       deriveSpendKey(script, vector.viewKey, vector.spendKey),
     ).not.toThrow();
@@ -35,7 +37,10 @@ it("resolves a fresh recipient-owned payment lock on each CCC lookup", async () 
 });
 
 it("delegates only names claimed by the fallback and preserves ordinary CCC addresses", async () => {
-  const script = { ...TESTNET_STEALTH_LOCK, args: vector.args };
+  const script = {
+    ...stealthScriptInfoForPrefix().stealthLock,
+    args: vector.args,
+  };
   const fallback = {
     shouldResolve: vi.fn((name: string) => name.endsWith(".example")),
     resolve: vi.fn(async (name: string) =>

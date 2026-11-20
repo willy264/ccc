@@ -1,6 +1,7 @@
 import type { StealthScriptInfo } from "./types.js";
 
 export const TESTNET_STEALTH = Object.freeze({
+  addressPrefix: "ckt",
   network: "testnet",
   stealthLock: {
     codeHash:
@@ -34,4 +35,10 @@ export const TESTNET_STEALTH = Object.freeze({
       },
     },
   ] as const,
-} as const satisfies StealthScriptInfo);
+} as const satisfies StealthScriptInfo & { addressPrefix: string });
+
+/** @deprecated Use predefined.TESTNET_STEALTH in new code. */
+export const TESTNET_STEALTH_LOCK = Object.freeze({
+  ...TESTNET_STEALTH.stealthLock,
+  network: TESTNET_STEALTH.network,
+});

@@ -4,6 +4,10 @@ import { fail } from "./errors.js";
 import { ORDER, scalar, tweak } from "./internal/curve.js";
 import { bytes, hex, scalarBytes } from "./internal/encoding.js";
 import { assertLock, pubkeyHash } from "./internal/lock.js";
+import {
+  stealthScriptInfoForPrefix,
+  type StealthScriptInfo,
+} from "./predefined/index.js";
 import type { Hex } from "./types.js";
 
 /**
@@ -14,8 +18,9 @@ export function deriveSpendKey(
   lockLike: ccc.ScriptLike,
   viewKey: string,
   spendKey: string,
+  deployment: StealthScriptInfo = stealthScriptInfoForPrefix(),
 ): Hex {
-  const lock = assertLock(lockLike);
+  const lock = assertLock(lockLike, deployment);
   const view = scalar(viewKey, "View key");
   const spend = scalar(spendKey, "Spend key");
   const args = bytes(lock.args, 53, "Stealth lock arguments");

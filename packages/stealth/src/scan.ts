@@ -78,6 +78,7 @@ export function scanStealthPayments(
   records: readonly FixturePayment[],
   viewKey: string,
   spendPublicKey: string,
+  deployment = stealthScriptInfoForPrefix(),
 ): { matches: DetectedPayment[]; rejected: number } {
   const view = scalar(viewKey, "View key");
   const spend = publicKey(spendPublicKey, "Spend public key");
@@ -94,7 +95,7 @@ export function scanStealthPayments(
         fail("INVALID_FIXTURE", "Expected a unique empty-data local fixture.");
       }
       seen.add(record.id);
-      const lock = assertLock(record.lock);
+      const lock = assertLock(record.lock, deployment);
       assertCapacity(record.capacity, lock);
       const match = matchLock(lock, view, spend);
       if (match) {
@@ -102,7 +103,7 @@ export function scanStealthPayments(
           ...record,
           lock: lock.clone(),
           oneTimePublicKey: match.oneTimePublicKey,
-          address: addressFor(lock),
+          address: addressFor(lock, deployment.addressPrefix),
         });
       }
     } catch {
