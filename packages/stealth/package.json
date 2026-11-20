@@ -2,7 +2,7 @@
   "name": "@ckb-ccc/stealth",
   "version": "0.1.0",
   "description": "CCC support for Obscell stealth addresses on CKB",
-  "author": "Hanssen0 <hanssen0@hanssen0.com>",
+  "author": "willy264 <daviswill264@gmail.com>",
   "license": "MIT",
   "private": false,
   "homepage": "https://github.com/ckb-devrel/ccc",
