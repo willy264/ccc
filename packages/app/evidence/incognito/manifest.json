@@ -1,0 +1,570 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-10-03T05:48:58.624Z",
+  "source": "Actual locally rendered CCC fork, with no injected DOM or fabricated settlement data.",
+  "scope": "Visual testnet-fixture demo; not deployment evidence. Local cryptography and unsigned outputs; all chain-dependent steps simulated.",
+  "repository": "https://github.com/willy264/ccc",
+  "branch": "feat/incognito-mode-demo",
+  "head": "6e2f954a4a160f9212a97e42a1b81071149ba50d",
+  "upstream": "https://github.com/ckb-devrel/ccc",
+  "upstreamBase": "722cfe28bb184145e14887d54162d55fbe3dcadb",
+  "dirtySourceAtCapture": false,
+  "browser": "154.0.4258.53",
+  "pageErrors": [],
+  "blockedExternalRequests": [
+    {
+      "phase": "desktop host bootstrap",
+      "type": "other",
+      "method": "GET",
+      "host": "raw.githubusercontent.com",
+      "path": "/ckb-devrel/ccc/refs/heads/dev/assets/logo.svg",
+      "presentationOnly": true,
+      "blocked": true
+    },
+    {
+      "phase": "desktop incognito module",
+      "type": "other",
+      "method": "GET",
+      "host": "raw.githubusercontent.com",
+      "path": "/ckb-devrel/ccc/refs/heads/dev/assets/logo.svg",
+      "presentationOnly": true,
+      "blocked": true
+    },
+    {
+      "phase": "desktop upstream module",
+      "type": "other",
+      "method": "GET",
+      "host": "raw.githubusercontent.com",
+      "path": "/ckb-devrel/ccc/refs/heads/dev/assets/logo.svg",
+      "presentationOnly": true,
+      "blocked": true
+    },
+    {
+      "phase": "desktop incognito return",
+      "type": "other",
+      "method": "GET",
+      "host": "raw.githubusercontent.com",
+      "path": "/ckb-devrel/ccc/refs/heads/dev/assets/logo.svg",
+      "presentationOnly": true,
+      "blocked": true
+    },
+    {
+      "phase": "mobile bootstrap",
+      "type": "other",
+      "method": "GET",
+      "host": "raw.githubusercontent.com",
+      "path": "/ckb-devrel/ccc/refs/heads/dev/assets/logo.svg",
+      "presentationOnly": true,
+      "blocked": true
+    },
+    {
+      "phase": "mobile bootstrap",
+      "type": "other",
+      "method": "GET",
+      "host": "raw.githubusercontent.com",
+      "path": "/ckb-devrel/ccc/refs/heads/dev/assets/logo.svg",
+      "presentationOnly": true,
+      "blocked": true
+    }
+  ],
+  "sourceDigests": [
+    {
+      "file": "packages/app/package.json",
+      "sha256": "6f25ea3e18584b869dadaa55c883b16aacaa8eab94461c02989e2d155e808922"
+    },
+    {
+      "file": "packages/app/scripts/check-incognito.mjs",
+      "sha256": "8e21ce6bc9aa571dbcbacebfc5bf2e9a57753f826740ea77424da105e4ad6002"
+    },
+    {
+      "file": "packages/app/src/app/activity-console.tsx",
+      "sha256": "d63192b08769546201e2dac5d7d5bb51767450ac36abb6280d051cf7a77fa296"
+    },
+    {
+      "file": "packages/app/src/app/copy-text.ts",
+      "sha256": "c35d24bf8aa65a42d192b1298d0e1f21f9988bfbe0c04ce47d918e5bb960359c"
+    },
+    {
+      "file": "packages/app/src/app/copyable-readout-value.tsx",
+      "sha256": "6323c41602d1e81dc80f7f6613273d5c34a0653df1b135e474e01e346f62d304"
+    },
+    {
+      "file": "packages/app/src/app/copyable-text.tsx",
+      "sha256": "5051ce007ff19f7e2f9fba352b4900aa22be978fc3e5f8581f21b04335b2d5d6"
+    },
+    {
+      "file": "packages/app/src/app/derived-accounts.module.css",
+      "sha256": "98a537fa7c25d26089e7982e6bbadd016b597a0116fc6636b08dd6db59941182"
+    },
+    {
+      "file": "packages/app/src/app/derived-accounts.tsx",
+      "sha256": "ecc11536124cfdbd5626c61e59599d889221b0995d67af66056956fc17ec6303"
+    },
+    {
+      "file": "packages/app/src/app/dropdown.module.css",
+      "sha256": "fa7c9d1326c700161f074142855b334b360627d4c0b9d35943bfbc7397f1ec2b"
+    },
+    {
+      "file": "packages/app/src/app/dropdown.tsx",
+      "sha256": "c5f98f5241947d199e5aa3896cf07b69b6a25921fb092cfea2d2f6f32c9ad54d"
+    },
+    {
+      "file": "packages/app/src/app/explorer-link.tsx",
+      "sha256": "98a455af6d945721e980353ba168d5e3007dccc2b1c5df368c0f9f321dfb4971"
+    },
+    {
+      "file": "packages/app/src/app/globals.css",
+      "sha256": "10a53aef53ad0b87f841eb0aea6758e220d7e7d43987298450997a5bbdf000fc"
+    },
+    {
+      "file": "packages/app/src/app/header-links.module.css",
+      "sha256": "b1fd6fb8325dd78da4df8db7334fe31c74d0b4bd1080edae254741a2a889a25b"
+    },
+    {
+      "file": "packages/app/src/app/header-links.tsx",
+      "sha256": "169d9afd2225225cbb87c98bffe8621c55039598b90728ca6e4c7ac2352468b8"
+    },
+    {
+      "file": "packages/app/src/app/layout.tsx",
+      "sha256": "4d2e13c331e84b24948c90e9849ca0dfc9910bd8a90c0d70f2c915749faeb7f7"
+    },
+    {
+      "file": "packages/app/src/app/module-item-list.tsx",
+      "sha256": "e0fdd77ba102b2da65e642436e8e4a0ab30c2aab0a2a06a31093ecae0ad1032a"
+    },
+    {
+      "file": "packages/app/src/app/module-readout.tsx",
+      "sha256": "a0f87cc1527f4835a542345ecbc030ed5f99f45f7abafd604af527ba18d86f75"
+    },
+    {
+      "file": "packages/app/src/app/module-textarea.module.css",
+      "sha256": "f5c4dacdd69546bd3f7e78fa4f1a7c6c60811f71bd96f8fa6154eb05a1060387"
+    },
+    {
+      "file": "packages/app/src/app/module-textarea.tsx",
+      "sha256": "0fbb14037a124d7fbfc51242ab817c4f2063d481adb6c60d50679ddf5aec2422"
+    },
+    {
+      "file": "packages/app/src/app/module-workspace.tsx",
+      "sha256": "2247202788fe03a1bb319570f716b0632b734f098d6bd49cc9ac061b134f91e8"
+    },
+    {
+      "file": "packages/app/src/app/modules.ts",
+      "sha256": "0c5f3566be98529b250b109e72b099e44adf35ba6f300b2508f5349f6c7e1e55"
+    },
+    {
+      "file": "packages/app/src/app/modules/create-spore-cluster-module.tsx",
+      "sha256": "7f63f0930dee96c574826a48e8f027f2fbd26e99a4d0155c5ffb150f0f7dedda"
+    },
+    {
+      "file": "packages/app/src/app/modules/dep-group-module.tsx",
+      "sha256": "85f2c5887c441c2e270327b8ec8412f957eb46de9e404fea985f2c8f58b8b23e"
+    },
+    {
+      "file": "packages/app/src/app/modules/deployer-module.module.css",
+      "sha256": "fe533f8b488183db4a117aac450a34a4c33cefd1e6dd161401309d6600681a69"
+    },
+    {
+      "file": "packages/app/src/app/modules/deployer-module.tsx",
+      "sha256": "5f20ed0a8081dd33780565b7b4e6dbd6aa4b521205aa919039d0ac8584af1625"
+    },
+    {
+      "file": "packages/app/src/app/modules/hash-module.tsx",
+      "sha256": "6d02a9d7b15f765e6a37dc50710fb2d4201fc44f2e9fb31e1f79b1969545415d"
+    },
+    {
+      "file": "packages/app/src/app/modules/hd-account-rules.ts",
+      "sha256": "0363ee68f29984e3ff8d1de7f45c907df2e8fe119408b8a8e7584ab263225e02"
+    },
+    {
+      "file": "packages/app/src/app/modules/incognito/fixtures.ts",
+      "sha256": "55d0ebd0ead6183ae4d058ac5d9b99e26f8d9120da2d93fa41a85cc8cc4caaf7"
+    },
+    {
+      "file": "packages/app/src/app/modules/incognito/incognito-module.tsx",
+      "sha256": "0da817344937cf7053d89c27c6d0fec4e3b403480ab553b7774b4a6670cec76d"
+    },
+    {
+      "file": "packages/app/src/app/modules/incognito/incognito.module.css",
+      "sha256": "9df853838c70dfd9d14ac5674ffd75b2eda91213a8c94f36306b765e1b862e8d"
+    },
+    {
+      "file": "packages/app/src/app/modules/incognito/local-transactions.ts",
+      "sha256": "20d13e0eb60e2b0478bdf1d1d519c98654140dd6cfa636f5d3d68363dc7edda9"
+    },
+    {
+      "file": "packages/app/src/app/modules/incognito/use-incognito-demo.ts",
+      "sha256": "851d2d6906f25e03e29a6bf2d342b3c91d9d738066a5c3863ce18d85def19307"
+    },
+    {
+      "file": "packages/app/src/app/modules/issue-xudt-module.tsx",
+      "sha256": "80ecdba26faf8894f02bc25174fc9e9109092db7328981183b3c090c4499b6bb"
+    },
+    {
+      "file": "packages/app/src/app/modules/keystore-module.tsx",
+      "sha256": "61e3aee1fee610756db855f66ebf4b16d9816ed0e44bf61a4cd8df7403e08a49"
+    },
+    {
+      "file": "packages/app/src/app/modules/khie/khie-client-module.module.css",
+      "sha256": "384b24d32e184efc8e898378846987ccfad1975cf3fd81f8476ef1fa63e72328"
+    },
+    {
+      "file": "packages/app/src/app/modules/khie/khie-client-module.tsx",
+      "sha256": "4b43327b4766d16f01ca76c4ae3fa1cd7e48625e7b9cb0efc9552b19ec507b6d"
+    },
+    {
+      "file": "packages/app/src/app/modules/khie/khie-icon.tsx",
+      "sha256": "8c1e7d8b5d76d0539b383571b47337b960643ad7721ca47f9e535bc7238c36a0"
+    },
+    {
+      "file": "packages/app/src/app/modules/khie/khie-module.tsx",
+      "sha256": "d489947f82c5652c2dfd9749cae85e70d796ab51e17daf333c313ea6d6a25ed3"
+    },
+    {
+      "file": "packages/app/src/app/modules/khie/khie-signer-session.ts",
+      "sha256": "e84674845c37c1a7b696c4b3f688381455232f5ba3136a3bc98a796c20982e18"
+    },
+    {
+      "file": "packages/app/src/app/modules/khie/peer-name.ts",
+      "sha256": "610b171c98e610063a134d06d0fa9b0d46a5a0ae056ea24477876d4d0bddcaa6"
+    },
+    {
+      "file": "packages/app/src/app/modules/khie/transaction-summary.ts",
+      "sha256": "c3686507ff16b5d2e5eda310ee718e7695456a5bcdf9d140bb1c24dd32859259"
+    },
+    {
+      "file": "packages/app/src/app/modules/mint-spore-module.tsx",
+      "sha256": "b7a3b909a2b297dc69a27a80acb6e674db849af64061b3308d9f98bb341f1b50"
+    },
+    {
+      "file": "packages/app/src/app/modules/mnemonic-module.tsx",
+      "sha256": "7c8dcd916c51d500a747659e32cff6000e44ba95a8821991619e8ea47717b90b"
+    },
+    {
+      "file": "packages/app/src/app/modules/module-helpers.tsx",
+      "sha256": "47a5089a5cb70d16eaf221edfd00e984aaa71ea2b876b988ccc74ae56bdab273"
+    },
+    {
+      "file": "packages/app/src/app/modules/nervos-dao-module.module.css",
+      "sha256": "b68d42c87e115f22229afe02ce0ac864cd50fdbe908b71e980acc738496d2e5d"
+    },
+    {
+      "file": "packages/app/src/app/modules/nervos-dao-module.tsx",
+      "sha256": "222454b8287a1da28df02b0765094f10ba03e20e9db61950ac1f0464fabc1569"
+    },
+    {
+      "file": "packages/app/src/app/modules/sign-module.tsx",
+      "sha256": "18031cdb490d2cf6a0b8f078bb07498b20fe231231d120c4e0d3525a59283ad7"
+    },
+    {
+      "file": "packages/app/src/app/modules/ssri-module.tsx",
+      "sha256": "1b0236199fe97b14933a8fa7ad973c9386dd13f3507d09b5c53270fb8e208653"
+    },
+    {
+      "file": "packages/app/src/app/modules/time-locked-transfer-module.module.css",
+      "sha256": "1e573d76bc55cc820d18bd99c5fe6fad653d473c917b7c5aee4e89c643769d56"
+    },
+    {
+      "file": "packages/app/src/app/modules/time-locked-transfer-module.tsx",
+      "sha256": "1d14f1953abba4e9ff61d4b115ced693ed7443255a7db02a0a0dc08f89d7c72e"
+    },
+    {
+      "file": "packages/app/src/app/modules/transfer-lumos-module.tsx",
+      "sha256": "719308e38868d244605aa96c0561b0092d38027e861c864a59fbef4fd3e1cf90"
+    },
+    {
+      "file": "packages/app/src/app/modules/transfer-module.tsx",
+      "sha256": "66eb8e98fef0d0aeef6557da9a308bd60e415d9da6d4be3f5c042d58a5c77341"
+    },
+    {
+      "file": "packages/app/src/app/modules/transfer-spore-cluster-module.tsx",
+      "sha256": "d99e8538c4b9d8f7370001e6ab8cefa611d8000b4b20621e7417c4a1cdf9049d"
+    },
+    {
+      "file": "packages/app/src/app/modules/transfer-spore-module.tsx",
+      "sha256": "144fef22b7adaff1e61241c6e1ff49601e3050f5b2e3bd59425f29d40d3dc202"
+    },
+    {
+      "file": "packages/app/src/app/modules/transfer-udt-module.tsx",
+      "sha256": "5eccf15c59ef4dcf2cf22f3dbbf44516d572c7f75780ffbd890de7c17fbd21d8"
+    },
+    {
+      "file": "packages/app/src/app/page.tsx",
+      "sha256": "c036bc1bbd1eb44b63cdf293dc113ac804fd86683b8582f6315bec4c770c6079"
+    },
+    {
+      "file": "packages/app/src/app/provider.tsx",
+      "sha256": "dccae9d52d2af4b2228ac1e6ce7ba0a6e42e942dc6d14161554248ba9f337b7e"
+    },
+    {
+      "file": "packages/app/src/app/qr-code.module.css",
+      "sha256": "a4e4221d6c95ea91008d24212daae5d111fbea8e95c99a67524ce17668fd4b75"
+    },
+    {
+      "file": "packages/app/src/app/qr-code.tsx",
+      "sha256": "b40618cba9a19b7ec02dfeec8fc218071f12f85794c5232f5ec4063c6c702cd4"
+    },
+    {
+      "file": "packages/app/src/app/qr-scanner.tsx",
+      "sha256": "c8f6d9dfb8e0aad45b4a6b45596864e3288d656c49bb8b93b4aa2c555f503c72"
+    },
+    {
+      "file": "packages/app/src/app/styles/account.css",
+      "sha256": "e16cd010cef8126a16896a99c182f357288c841070fce9c1f957aef49525c890"
+    },
+    {
+      "file": "packages/app/src/app/styles/activity-console.css",
+      "sha256": "50c9b1903923025cc736151db3e6d2a65989de76b75d4fabedab17e8ded7ec35"
+    },
+    {
+      "file": "packages/app/src/app/styles/background.css",
+      "sha256": "d5fbf4d3b945524b35a6f52baa4d3a57d271267f5e4fbea75e5000133b7d494b"
+    },
+    {
+      "file": "packages/app/src/app/styles/base.css",
+      "sha256": "b4d8607ad1d165f57cba000b4c4a9efe1babb53d810c3374869eab149c0c61a9"
+    },
+    {
+      "file": "packages/app/src/app/styles/connection.css",
+      "sha256": "e6442b35040198a5b0c8868c1794cf64d659ba65734ff9b65b39e4265a3a32d9"
+    },
+    {
+      "file": "packages/app/src/app/styles/module-controls.css",
+      "sha256": "a7fecce1d32ca050b100a277bf2c58f44906a68e2fe37b765037d30440d8ebd6"
+    },
+    {
+      "file": "packages/app/src/app/styles/shell.css",
+      "sha256": "aabd4a7594518f1e6b71ef2a92be0a02b451921c433912c8dfcac202cc2d4168"
+    },
+    {
+      "file": "packages/app/src/app/styles/tokens.css",
+      "sha256": "49aaad74a23d0ef79d39dd3faacbc2af8dc31f61023b9c12ce76ec0ad54307df"
+    },
+    {
+      "file": "packages/app/src/app/styles/tool-matrix.css",
+      "sha256": "a1881f632cdca45bfb5d67b743412eb9e24ae5257777a9b315b0315fe0fcf12e"
+    },
+    {
+      "file": "packages/app/src/app/styles/workspace.css",
+      "sha256": "3b4cc5cd3cec5092aace150eab373810435b39114c545cf76218b0f261aaff34"
+    },
+    {
+      "file": "packages/app/src/app/tool-bay.tsx",
+      "sha256": "1d14185c4e47ed2e759f2d83fc6571440a0b1f8a3a4d028a5cc5e202e251c4a3"
+    },
+    {
+      "file": "packages/app/src/app/use-decorative-animation-visibility.ts",
+      "sha256": "eefd5364689cc8f36f9f211f1a2a5c1e0b2c81acaf3eb6fcd70517ca54f07808"
+    },
+    {
+      "file": "packages/app/src/app/use-paged-module-items.ts",
+      "sha256": "fd176469592a5a462b22dcc1dc18568806bea7fd269e01b768a78443a76c4105"
+    },
+    {
+      "file": "packages/app/src/core-js.d.ts",
+      "sha256": "15fdc3c52c9d5434e8e0aba8ad1300aa437391ac97bfeec96e5a7707e447f1e5"
+    },
+    {
+      "file": "packages/app/src/instrumentation-client.ts",
+      "sha256": "02216b839094571dfb84c527df92c0214a18a619397fa2bcaec59923ac157a66"
+    },
+    {
+      "file": "packages/stealth/package.json",
+      "sha256": "527e08d6eb38451241dac461e7fb5a773b0b7a271fdc7d6dba3024223d903375"
+    },
+    {
+      "file": "packages/stealth/src/barrel.ts",
+      "sha256": "005e3244c1d0e199568e710582d4e384cbe889a8a7d904623716bcee840d76c3"
+    },
+    {
+      "file": "packages/stealth/src/capacity.ts",
+      "sha256": "b6f605b2770869e6787b820c6c9e3f5e2ec13b237c30a7abfdf06f411c0f424d"
+    },
+    {
+      "file": "packages/stealth/src/change.ts",
+      "sha256": "75b4239d51659a816aa5d83a9e48981600ed48d8da1eda543b210ddc60b90308"
+    },
+    {
+      "file": "packages/stealth/src/constants.ts",
+      "sha256": "30601332f9551bc5586af733a55db59a5382e37b20ee420dff651ee5cee5c258"
+    },
+    {
+      "file": "packages/stealth/src/derivation.ts",
+      "sha256": "56570e054e624168decf7d10be2ef0351320c529d473fa5767e7b13cfcc71777"
+    },
+    {
+      "file": "packages/stealth/src/disclosure.ts",
+      "sha256": "80c9b1e97c2af244bd9addbb13cecd63000188a93ea860117b79002ff7bb2add"
+    },
+    {
+      "file": "packages/stealth/src/errors.ts",
+      "sha256": "21f3f103bdbc00c969bdfa52d0f450d17db8e6f783c06ceadad6cb31abcc5fb5"
+    },
+    {
+      "file": "packages/stealth/src/index.ts",
+      "sha256": "cce69d28625583b09cfb44c13d28724ba2ecf426d2c359853dbbd389c76ee914"
+    },
+    {
+      "file": "packages/stealth/src/internal/curve.ts",
+      "sha256": "59a218f5d19c8163df3c457641992e0689a74c1c098f95f5cc49cc9f962bcd3e"
+    },
+    {
+      "file": "packages/stealth/src/internal/derive-payment.ts",
+      "sha256": "36b611c45af4539bee3e8a8ece63ad85573abc69b34ec03daaac69d83db620e9"
+    },
+    {
+      "file": "packages/stealth/src/internal/encoding.ts",
+      "sha256": "f1ea5daaf01909308ca111cdee9cf5bd59e86085228c24106f2b99e6248b49d5"
+    },
+    {
+      "file": "packages/stealth/src/internal/lock.ts",
+      "sha256": "6c23aeb7e2495c4ea784ab84164c65630ed3a0fff0fc8c6b1e3d6732c95586d0"
+    },
+    {
+      "file": "packages/stealth/src/meta-address.ts",
+      "sha256": "68901e4d174778535e67379becd4f5436c14795d31d6489d6f413e0804aa92ea"
+    },
+    {
+      "file": "packages/stealth/src/scan.ts",
+      "sha256": "09db2d22de19fd6695bbcb4d4bccc59292373c6e776b9a6e8dc68f8fcebf6aa8"
+    },
+    {
+      "file": "packages/stealth/src/spend.ts",
+      "sha256": "ac65734397cf9b3c1a249c756983fd427f271b527b9e83ea9f67b765a44bc6d1"
+    },
+    {
+      "file": "packages/stealth/src/testing/fixtures.ts",
+      "sha256": "a75e13acbaf8b1ae64ad169926d168e3fc232b24f8aa02794bd992be8b1345de"
+    },
+    {
+      "file": "packages/stealth/src/testing/index.ts",
+      "sha256": "aeb25f15bb4afd5e317be4285c6c074749594db7ffb9581894b10a452ccb1120"
+    },
+    {
+      "file": "packages/stealth/src/transactions.ts",
+      "sha256": "1761a37860c8bd91cd08bb18c5fafbd9396a517eba748c4090058dfe467266e1"
+    },
+    {
+      "file": "packages/stealth/src/types.ts",
+      "sha256": "47853f3ef1ab7050ae14b964bba665efa67b40fd14d750a2e1a9f71952d34476"
+    },
+    {
+      "file": "pnpm-lock.yaml",
+      "sha256": "30c0eeaba7d57c82a5df6c984c5e71908321e720a6ab374bab18af28b9f9e7d7"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "01-ccc-tool-matrix.png",
+      "caption": "Actual CCC fork tool matrix with the new local Incognito entry; existing CCC modules retained.",
+      "capturedAt": "2026-10-03T05:48:50.935Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1019
+      },
+      "image": {
+        "width": 1440,
+        "height": 1019
+      },
+      "sha256": "36e0d5c1d58067b03f3cb36bd1653c06c6bcc908a4f54eaf280a7ec58e18d75c"
+    },
+    {
+      "file": "02-normal-mode.png",
+      "caption": "Normal mode in CCC's native module workspace. Public fixture address; no connected wallet or chain operation.",
+      "capturedAt": "2026-10-03T05:48:51.654Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1638
+      },
+      "image": {
+        "width": 1440,
+        "height": 1638
+      },
+      "sha256": "a1b0f8d21d26ff44838c4eeb85a87b46287723daa7884b1469785583385546f1"
+    },
+    {
+      "file": "03-incognito-mode.png",
+      "caption": "Incognito enabled in the same CCC module, showing the public fixture meta-address. Target experience; chain steps simulated.",
+      "capturedAt": "2026-10-03T05:48:52.679Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1692
+      },
+      "image": {
+        "width": 1440,
+        "height": 1692
+      },
+      "sha256": "42727563721abdd035c845b424faba919ff47d21d97ee7b28484b56d73b1f655"
+    },
+    {
+      "file": "04-stealth-send.png",
+      "caption": "Real local one-time address derivation and unsigned CCC output. Input selection, fees, signing, broadcast and settlement are simulated; not deployment evidence.",
+      "capturedAt": "2026-10-03T05:48:53.749Z",
+      "viewport": {
+        "width": 1440,
+        "height": 2098
+      },
+      "image": {
+        "width": 1440,
+        "height": 2098
+      },
+      "sha256": "3375b6ea3aa45a811c6b239ea80933fdec2aab7ce05a1f25dcd116b7698cc5dd"
+    },
+    {
+      "file": "05-scan-receive.png",
+      "caption": "Matching public fixture and local spend-authority preview. No indexer query, live cell, signed spend or settlement exists.",
+      "capturedAt": "2026-10-03T05:48:54.374Z",
+      "viewport": {
+        "width": 1440,
+        "height": 2055
+      },
+      "image": {
+        "width": 1440,
+        "height": 2055
+      },
+      "sha256": "858a68b9aab998ae2070e71c51773cf2a3d057dac24aed2d0cbb4f8daf75e7de"
+    },
+    {
+      "file": "06-mode-comparison.png",
+      "caption": "Side-by-side explanation of Normal and Incognito inside the existing CCC workspace. Both modes disclose amounts and sender inputs.",
+      "capturedAt": "2026-10-03T05:48:55.380Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1830
+      },
+      "image": {
+        "width": 1440,
+        "height": 1830
+      },
+      "sha256": "bbea88b408a5a29c41e17e14e9d1205a09598197901bc269d789307d21f9237c"
+    },
+    {
+      "file": "07-disclosure.png",
+      "caption": "Honest disclosure: recipient linkage is reduced; amounts, sender inputs, timing and transaction relationships remain visible. No deployment claim.",
+      "capturedAt": "2026-10-03T05:48:55.839Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1415
+      },
+      "image": {
+        "width": 1440,
+        "height": 1415
+      },
+      "sha256": "2bdaa525a27a5587674b763183b70e64a4edb7659e71a031d562ddf927cbb93d"
+    },
+    {
+      "file": "08-mobile-disclosure.png",
+      "caption": "390px responsive view of the same native CCC Incognito module; local fixture demo with visible disclosure.",
+      "capturedAt": "2026-10-03T05:48:58.559Z",
+      "viewport": {
+        "width": 390,
+        "height": 1747
+      },
+      "image": {
+        "width": 390,
+        "height": 1747
+      },
+      "sha256": "7136981e3ae4bec6010a2a64bc1e2978761f1358bc2da5fd8b589abe8c7fed86"
+    }
+  ]
+}

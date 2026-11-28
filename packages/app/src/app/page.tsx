@@ -312,6 +312,23 @@ export default function Home() {
           <HeaderLinks client={client} />
         </header>
 
+        <nav className="module-actions" aria-label="Fork demo">
+          <button
+            type="button"
+            className="is-primary"
+            onClick={() => {
+              const incognitoModule = demoModules.find(
+                ({ id }) => id === "incognito",
+              );
+              if (incognitoModule) {
+                selectModule(incognitoModule);
+              }
+            }}
+          >
+            Compare Incognito · local demo
+          </button>
+        </nav>
+
         <section
           className={`machine ${selectedModule ? "has-selection" : ""} ${needsAccess ? "needs-access" : ""} ${connected ? "is-connected" : ""}`}
         >

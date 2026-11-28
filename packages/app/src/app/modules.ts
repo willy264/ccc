@@ -14,6 +14,7 @@ import {
   PackagePlus,
   PiggyBank,
   Rocket,
+  ShieldCheck,
   Signature,
   Sparkles,
   Stamp,
@@ -27,6 +28,7 @@ import { CreateSporeClusterModule } from "./modules/create-spore-cluster-module"
 import { DepGroupModule } from "./modules/dep-group-module";
 import { DeployerModule } from "./modules/deployer-module";
 import { HashModule } from "./modules/hash-module";
+import { IncognitoModule } from "./modules/incognito/incognito-module";
 import {
   IssueXUdtSusModule,
   IssueXUdtTypeIdModule,
@@ -173,6 +175,15 @@ export const demoModules: readonly DemoModule[] = defineModules([
     icon: ArrowLeftRight,
     access: "signer",
     component: TransferModule,
+  },
+  {
+    name: "Incognito",
+    description:
+      "Compare Normal and Incognito sending and receiving with public testnet fixtures. Local cryptography; simulated chain steps. No wallet connection or broadcast.",
+    group: "Transaction",
+    icon: ShieldCheck,
+    access: "local",
+    component: IncognitoModule,
   },
   {
     name: "Transfer xUDT",
